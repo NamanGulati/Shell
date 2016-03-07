@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 HINSTANCE hInst;
 
@@ -68,7 +69,7 @@ cout << "\nRunning Shell\n" << "\n" << endl;
 
 while ( true ) {
 
-checkfile()
+checkfile();
 
 string input = "";     // Used to get input from the user
 char* cinput = NULL;  // Used to store C-style version of the input
@@ -109,17 +110,27 @@ char* cinput = NULL;  // Used to store C-style version of the input
             string url = input.substr(input.find(" "),input.length());
           ShellExecuteA(0,0,"chrome.exe",url.c_str(),0,SW_SHOWMAXIMIZED);
            }
+
            else if(strcmp("openfile", savedTokens[0]) == 0){
                 string file = input.substr(input.find(" "),input.length());
-                cout<<"\n\nSorry, the google and openfile commands are not fully developed yet"<<endl;
-                //file+=".exe";
-            ShellExecuteA(0,0,file.c_str(),"",0,SW_SHOWMAXIMIZED);
+                const char* c=file.c_str();
+                system(c);
+
            }
            else if(strcmp("google", savedTokens[0]) == 0){
             cout<< "Redirecting..."<< endl;
-            cout<<"\n\nSorry,the google and openfile commands are not fully developed yet"<<endl;
             string url = input.substr(input.find(" "),input.length());
-          ShellExecuteA(0,0,"chrome.exe",url.c_str(),0,SW_SHOWMAXIMIZED);
+            string querry="http://www.google.com/search?q=";
+            replace(url.begin(), url.end(), ' ', '+');
+            /*for (int i=0;i < url.length();i++)
+            {
+                cout<<querry<<endl;
+                querry+=url.substr(i,url.find(" ")-7)+"+";
+                i=url.find(" ")-7;
+            }*/
+            querry+=url;
+            cout<<querry<<endl;
+          ShellExecuteA(0,0,"chrome.exe",querry.c_str(),0,SW_SHOWMAXIMIZED);
            }
            else if (strcmp("help", savedTokens[0]) == 0){
             cout<<"chrome        enter chrome with a url to open chorme to that link"<<endl;
@@ -130,18 +141,8 @@ char* cinput = NULL;  // Used to store C-style version of the input
             cout<<"enter any other command and it will enter that command into command prompt"<<endl;
 
            }
-           else if(strcmp("email", savedTokens[0]) == 0){
-                list<string> lines;
-string t;
-while ( !file.eof() )//read everything in the file
-{
-   getline(file,t);//store a line in 't'
-   lines.push_back( t );//add 't' to the list
-}
-string first_line = *lines.begin();//get the first element of the list
-if ( first_line.find('1')!=string::npos )//check if it has '1'
-   cout << first_line;//print it
-           }
+
+
            else{
             //cout<< "Command Not Found"<<endl;
             system(input.c_str());

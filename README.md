@@ -1,6 +1,6 @@
 # Shell
 
-This is a bery productive Shell for windows
+The most productive Shell for windows
 
 #Features
   - Google search
@@ -10,4 +10,4 @@ This is a bery productive Shell for windows
 
 #How to use
   
-  There is an exe in the debug foler named shell2.exe run the executabe to use
+  run the "shell.exe" and type help for a list of commands
